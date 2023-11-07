@@ -2,24 +2,23 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
+    var query_name = "Test name";
 }
 
 <div class="text-center">
-    <h1 class="display-4 lobster-shadow">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome</h1>
 
-    <lean-welcome>
-    </lean-welcome>
+    <lean-welcome></lean-welcome>
 
     <hello-world></hello-world>
 
-    <div>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, ipsum? Eum eius quo magni dolores commodi animi excepturi ex molestiae eveniet, velit cum cupiditate praesentium consequuntur vitae dolorum alias ullam!</p>
-    </div>
-</div>
+    @* <cm-hero></cm-hero> *@
 
-<style>
-  .lobster-shadow {
-    text-shadow: 4px 6px 8px rgba(255, 0, 0, 0.5);
-  }
-</style>
+    <button
+        class="btn btn-primary"
+        hx-swap="outerHTML"
+        hx-get='@Url.Page("Index", "Profile", new { query_name = "search-regex-patterns" })'>
+        Click meee
+    </button>
+
+</div>

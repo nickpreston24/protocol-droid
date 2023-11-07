@@ -1,7 +1,13 @@
+using CodeMechanic.Embeds;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddTransient<IEmbeddedResourceQuery, EmbeddedResourceQuery>();
+
+builder.Services.ConfigureAirtable();
+builder.Services.ConfigureNeo4j();
 
 var app = builder.Build();
 
