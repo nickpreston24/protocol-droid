@@ -1,0 +1,175 @@
+[
+  {
+    "extensions": "aspx,ascx",
+    "replacements": [
+      {
+        "name": "replace_page_headers",
+        "find": "<%@\\s*Page.*?%>",
+        "replacement": "@page\r\n@model{}"
+      },
+      {
+        "name": "replace_imports_with_usings",
+        "find": "<%@\\s*Import\\s*Namespace=\"((.*?))\"\\s*%>",
+        "replacement": "@using $1"
+      },
+      {
+        "name": "replace_asp_start_tag",
+        "find": "<%=\\s*",
+        "replacement": ""
+      },
+      {
+        "name": "replace_asp_comment_start_tag",
+        "find": "<%--\\s*",
+        "replacement": "/*"
+      },
+      {
+        "name": "replace_asp_start_tag",
+        "find": "<%\\s*",
+        "replacement": ""
+      },
+      {
+        "name": "replace_asp_comment_end_tag",
+        "find": "\\s*--%>",
+        "replacement": "*/"
+      },
+      {
+        "name": "replace_asp_end_tag",
+        "find": "%>",
+        "replacement": ""
+      },
+      {
+        "name": "replace_asp_menu_tag",
+        "find": "\\basp:Menu\\b\\s*",
+        "replacement": "ul "
+      },
+      {
+        "name": "replace_asp_menu_item_tag",
+        "find": "\\basp:MenuItem\\b\\s*",
+        "replacement": "li "
+      },
+      {
+        "name": "replace_asp_content_tag",
+        "find": "asp:Content\\s*",
+        "replacement": "div"
+      },
+      {
+        "name": "replace_asp_content_tag",
+        "find": "asp:Image\\s*",
+        "replacement": "img"
+      },
+      {
+        "name": "replace_asp_dropdown_tag",
+        "find": "asp:DropDownList\\s*",
+        "replacement": "select"
+      },
+      {
+        "name": "replace_asp_textbox_tag",
+        "find": "(asp:TextBox)(.*?MultiLine\")\\s*",
+        "replacement": "textarea"
+      },
+      {
+        "name": "replace_asp_checkbox",
+        "find": "\\basp:CheckBox\\b\\s*",
+        "replacement": "input type='checkbox'"
+      },
+      {
+        "name": "replace_asp_label",
+        "find": "\\basp:Label\\b\\s*",
+        "replacement": "label "
+      },
+      {
+        "name": "replace_asp_hyperlink",
+        "find": "<asp:HyperLink\\s*",
+        "replacement": "<a "
+      },
+      {
+        "name": "replace_asp_hyperlink_end_tag",
+        "find": "</asp:HyperLink>",
+        "replacement": "/>"
+      },
+      {
+        "name": "lowercase_target_literal",
+        "find": "Target=(\"\\w+?\")",
+        "replacement": "target=$1"
+      }
+    ],
+    "removals": [
+      {
+        "name": "remove_ids_small",
+        "find": "id=\".*?\"",
+        "replacement": ""
+      },
+      {
+        "name": "remove_ids_large",
+        "find": "ID=\".*?\"",
+        "replacement": "",
+        "enabled": false
+      },
+      {
+        "name": "remove_runat_server",
+        "find": "runat=\".*?\"",
+        "replacement": ""
+      },
+      {
+        "name": "remove_styles",
+        "find": "style=\".*?\"",
+        "replacement": ""
+      },
+      {
+        "name": "remove_colspan",
+        "find": "colspan=\"\\d*?\"",
+        "replacement": ""
+      },
+      {
+        "name": "remove_cruft",
+        "find": "ClientIDMode=\".*?\"",
+        "replacement": ""
+      },
+      {
+        "name": "remove_cruft",
+        "find": "ContentPlaceHolderID=\".*?\"",
+        "replacement": ""
+      },
+      {
+        "name": "remove_cruft",
+        "find": "Wrap=\".*?\"",
+        "replacement": ""
+      },
+      {
+        "name": "remove_cruft",
+        "find": "class=\"header\\d?\"",
+        "replacement": ""
+      },
+      {
+        "name": "remove_cruft",
+        "find": "class=\"toptable\\s*layout\\d?\"",
+        "replacement": ""
+      },
+      {
+        "name": "remove_cruft",
+        "find": "class=\"rowheader\"",
+        "replacement": ""
+      },
+      {
+        "name": "remove_cruft",
+        "find": "class=\"row_spacer\"",
+        "replacement": ""
+      },
+      {
+        "name": "remove_cruft",
+        "find": "class=\"lnk\"",
+        "replacement": ""
+      }
+    ]
+  },
+  {
+    "extensions": "cs",
+    "replacements": [
+      {
+        "name": "page_to_pagemodel",
+        "find": "(public.*?class\\s*)(\\w+)\\s*:\\s*Page",
+        "replacement": "$1 $2Model : PageModel"
+      }
+    ]
+  }
+]

@@ -1,0 +1,345 @@
+[
+  {
+    "extensions": "aspx,ascx",
+    "replacements": [
+      {
+        "find": "Language=\"vb\"",
+        "replacement": "Language=\"C#\""
+      },
+      {
+        "find": "CodeBehind=\"(%5Cw+).as([pc])x.vb\"",
+        "replacement": "CodeBehind=\"$1.as$2x.cs\""
+      },
+      {
+        "find": "End If%5Cs*",
+        "replacement": " } "
+      },
+      {
+        "find": "Else%5Cs*",
+        "replacement": " } else { "
+      },
+      {
+        "find": "<%%5Cs*Next%5Cs*%>",
+        "replacement": "<% } %>"
+      },
+      {
+        "find": "AndAlso",
+        "replacement": "&&"
+      },
+      {
+        "find": "If Not%5Cs*(.*)%5Cs*Then",
+        "replacement": "if (!($1)) { "
+      },
+      {
+        "find": "Dim%5Cs*(%5Cw+)%5Cs*=(.*);?$",
+        "replacement": "var $1 = $2"
+      },
+      {
+        "find": "Dim%5Cs*(%5Cw+)%5Cs*As%5Cs*(%5Cw+)",
+        "replacement": "$2 $1"
+      },
+      {
+        "find": "IsDBNull%5C((.*)%5C)",
+        "replacement": " (DBNull.Value == $1)"
+      },
+      {
+        "find": "If%5Cs*(.*)%5Cs*Then",
+        "replacement": " if ($1) { "
+      },
+      {
+        "find": "Trim%5C((%5Cw+%5C(\"%5Cw+\"%5C)%5C))",
+        "replacement": "$1.ToString().Trim()"
+      },
+      {
+        "find": "Strings.Trim%5C((%5Cw+%5C(\"%5Cw+\"%5C)%5C)) ",
+        "replacement": "$1.ToString().Trim()"
+      },
+      {
+        "find": "%5Cs&%5Cs",
+        "replacement": " + "
+      },
+      {
+        "find": "For Each%5Cs*(%5Cw+) As %5Cw*%5C.?DataRow In (.*)%5Cs*%>",
+        "replacement": "foreach (DataRow $1 in ($2)) { %>"
+      },
+      {
+        "find": "IIf%5C((.*),(.*),(.*)%5C)",
+        "replacement": "$1 ? $2 : $3"
+      },
+      {
+        "find": "Interaction.IIf%5C((.*),(.*),(.*)%5C)",
+        "replacement": "$1 ? $2 : $3"
+      },
+      {
+        "find": "Conversions.ToString%5C((.*)%5C)",
+        "replacement": "$1.ToString()"
+      },
+      {
+        "find": "Integer(%5Cw+)",
+        "replacement": "int $1;"
+      },
+      {
+        "find": "CInt%5C((%5Cw+)%5C)",
+        "replacement": "($1).ToInt()"
+      },
+      {
+        "find": "Trim%5C((Eval.*)%5C)",
+        "replacement": "($1).Trim()"
+      },
+      {
+        "find": "Operators.ConcatenateObject%5C((.*)%5C);",
+        "replacement": "$1;"
+      },
+      {
+        "find": ".Rows%5C((%5Cd+)%5C)",
+        "replacement": ".Rows[$1]"
+      },
+      {
+        "find": "r%5C((%5Cd+)%5C)",
+        "replacement": ".Rows[$1]"
+      },
+      {
+        "find": "r%5C(\"((%5Cw+))\"%5C)",
+        "replacement": "r[\"$1\"]"
+      },
+      {
+        "find": "r%5C[%5C'(.*)%5C'%5C]",
+        "replacement": "r[\"$1\"]"
+      },
+      {
+        "find": "%5C.Tables%5C((%5Cd+)%5C)%5C.Rows",
+        "replacement": ".Tables[$1].Rows"
+      },
+      {
+        "find": "CDate%5C((%5Cw+%5C[.*%5C])%5C)",
+        "replacement": "$1.ToString().ToDateTime().Value"
+      }
+    ]
+  },
+  {
+    "extensions": "cs",
+    "replacements": [
+      {
+        "find": "Operators.ConditionalCompareObjectEqual%5C((.*?),(.*?),%5Cs*false%5C)",
+        "replacement": "$1 != $2"
+      },
+      // {
+      //   "name": "replace_vb_rows_with_c#_rows_double_quote",
+      //   "find": "%5Cw+%5C(\"(%5Cw+?)\"%5C)",
+      //   "replacement": "r[\"$1\"].ToString()"
+      // },
+      // {
+      //   "name": "replace_single_quote_rows_with_double_quotes",
+      //   "find": "r%5C['(%5Cw+)'%5C]",
+      //   "replacement": "r[\"$1\"].ToString()"
+      // },
+      {
+        "name": "remove_end_of_method_comments",
+        "find": "^(%5Cs*%5C}%5Cs*)//%5Cs*[a-zA-Z%5Cs%5C.%5Cw]+$",
+        "replacement": "$1"
+      },
+      {
+        "name": "Post_CSharpier_VB-Cleanup",
+        "find": "is%5Cs*not%5Cs*null",
+        "replacement": " != null "
+      },
+      {
+        "find": "is%5Cs*null",
+        "replacement": " == null "
+      },
+      {
+        "find": "(%5Cw+%5C[\"%5Cw+\"%5C])%5Cs*%5C+%5Cs*\"\"",
+        "replacement": "$1.ToString()"
+      },
+      {
+        "find": "Conversions%5C.ToDecimal%5C((.*)%5C)",
+        "replacement": "$1.ToString().ToDecimal()"
+      },
+      {
+        "find": "Conversions%5C.ToBoolean%5C((.*)%5C)",
+        "replacement": "$1.ToString().ToBoolean()"
+      },
+      {
+        "find": "Conversions%5C.ToDouble%5C((.*)%5C)",
+        "replacement": "$1.ToString().ToDouble()"
+      },
+      {
+        "find": "Conversions%5C.ToFloat%5C((.*)%5C)",
+        "replacement": "$1.ToString().ToFloat()"
+      },
+      {
+        "find": "Conversions%5C.ToInteger%5C((.*)%5C)",
+        "replacement": "$1.ToString().ToInt()"
+      },
+      {
+        "find": "Conversions%5C.ToDate%5C((.*)%5C)",
+        "replacement": "$1.ToString().ToDateTime().Value"
+      },
+      {
+        "find": "Strings.Len%5C((.*)%5C)",
+        "replacement": "$1.Length"
+      },
+      {
+        "find": "Information%5C.UBound%5C((%5Cw+)%5C)",
+        "replacement": "$1.GetUpperBound(0)"
+      },
+      {
+        "find": "Strings%5C.UCase%5C((.*)%5C)",
+        "replacement": "$1.ToUpper()"
+      },
+      {
+        "find": "UCase%5C((.*)%5C)",
+        "replacement": "$1.ToUpper()"
+      },
+      {
+        "find": "Strings%5C.LCase%5C((.*)%5C)",
+        "replacement": "$1.ToLower()"
+      },
+      {
+        "find": "LCase%5C((.*)%5C)",
+        "replacement": "$1.ToLower()"
+      },
+      {
+        "find": "AppLib%5C.SQLEncode%5C((%5Cw+%5C.?.*)%5C)",
+        "replacement": "$1.SqlEncode()"
+      },
+      {
+        "find": "Strings%5C.Trim%5C((.*)%5C)",
+        "replacement": "$1.ToString().Trim()"
+      },
+      {
+        "find": "%5C.ToString()%5C.ToString()",
+        "replacement": ".ToString()"
+      },
+      {
+        "find": "Conversions%5C.ToString",
+        "replacement": ""
+      },
+      {
+        "find": "using%5Cs*Microsoft%5C.VisualBasic%5C.CompilerServices;",
+        "replacement": ""
+      },
+      {
+        "find": "using%5Cs*Microsoft%5C.VisualBasic;",
+        "replacement": ""
+      },
+      {
+        "find": "Operators%5C.ConcatenateObject%5C(\n?\r?",
+        "replacement": "("
+      },
+      {
+        "find": "Information%5C.IsNumeric%5C((.*)%5C)",
+        "replacement": "$1.ToString().IsNumeric()"
+      },
+      {
+        "find": "(%5C(public|private%5C)%5Cs*string%5Cs*%5Cw+);",
+        "replacement": "$1 = string.Empty"
+      },
+      {
+        "name": "prevent_null_lists",
+        "find": "(%5C(private|public%5C)%5Cs*List<([a-zA-Z.]+)>%5Cs*%5Cw+);",
+        "replacement": "$1 = new List<$3>();"
+      },
+      {
+        "name": "prevent_null_datatables",
+        "find": "(%5C(public|private%5C)%5Cs*DataTable%5Cs*%5Cw+);",
+        "replacement": "$1 = new DataTable();"
+      },
+      {
+        "find": "(%5C(public|private%5C)%5Cs*DataSet%5Cs*%5Cw+);",
+        "replacement": "$1 = new DataSet();",
+        "name": "prevent null datasets"
+      },
+      {
+        "name": "update_rows_to_object_notation",
+        "find": "%5C[\"(%5Cw+?)\"%5C]",
+        "replacement": ".$1",
+        "enabled": false
+      }
+    ]
+  },
+  {
+    "extensions": "cpp",
+
+    "targetextension": "cs",
+
+    "replacements": [
+      {
+        "name": "replace_end_arrows_with_dots",
+        "find": "(%5Cw+)->([A-Z]%5Cw+%5C(.*%5C))",
+        "replacement": "$1.$2"
+      },
+      {
+        "name": "System::Void",
+        "find": "System::Void",
+        "replacement": "public void"
+      },
+      {
+        "name": "gcnew_is_new",
+        "find": "\bgcnew\b",
+        "replacement": ""
+      },
+      {
+        "name": "replace_end_arrows_with_dots_eager",
+        "find": "->",
+        "replacement": ".",
+        "enabled": true
+      },
+      {
+        "name": "remove_carrat_from_variable_name",
+        "find": "%5C^(%5Cw+)%5Cs*=",
+        "replacement": "$1 ="
+      },
+      {
+        "name": "remove_carrat_from_front_of_variable",
+        "find": "%5Cs*?%5C^(%5Cw+)",
+        "replacement": " $1"
+      },
+      {
+        "name": "remove_carrat_from_end_of_variable",
+        "find": "(%5Cw+)%5C^",
+        "replacement": "$1"
+      },
+      {
+        "name": "fix_carrat_on_list_variable",
+        "find": ">%5C^",
+        "replacement": ">"
+      },
+      {
+        "name": "double_colons_in_variables_to_dots",
+        "find": "%5C:%5C:",
+        "replacement": "."
+      },
+      {
+        "name": "pound_includes",
+        "find": "#include",
+        "replacement": "//#include"
+      },
+      {
+        "name": "hide_namespace_usings",
+        "find": "using%5Cnamespace",
+        "replacement": "//using namespace"
+      },
+      {
+        "name": "hide_namespace_shorthands",
+        "find": "((?<NamespaceShorty>)^(%5Cw{3,6})%5Cs*%5C^?%5Cs*?%5Cw+%5C.)",
+        "replacement": "/*$1*/ public $2 "
+      },
+      {
+        "name": "ref_structs_become_structs",
+        "find": "^public%5Cs+ref%5Cstruct",
+        "replacement": "public struct"
+      },
+      {
+        "name": "multidimensional_arrays_setter",
+        "find": "array%5C<(%5Cw+)%5Cs*%5C^,%5Cs*%5Cd+%5C>%5C((%5Cd+,%5Cs*%5Cd+)%5C)",
+        "replacement": "$1[$2]"
+      },
+      {
+        "name": "multidimensional_arrays_declarations",
+        "find": "array%5C<(%5Cw+)%5Cs*%5C^,%5Cs*%5Cd+%5C>",
+        "replacement": "$1[,]"
+      }
+    ]
+  }
+]
