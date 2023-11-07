@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "scripts": {
     "dev": "dotnet watch run --launch-profile hotreloadprofile --urls http://127.1.1.0:8080",
     "build_routes": "node wwwroot/js/build_routes.js",

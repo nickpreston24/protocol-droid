@@ -9,6 +9,22 @@
       "PackagePath": "staticwebassets/css/site.css"
     },
     {
+      "Id": "/home/nick/Desktop/projects/personal/protocol-droid/web/wwwroot/dist/hello-world.js",
+      "PackagePath": "staticwebassets/dist/hello-world.js"
+    },
+    {
+      "Id": "/home/nick/Desktop/projects/personal/protocol-droid/web/wwwroot/dist/index.js",
+      "PackagePath": "staticwebassets/dist/index.js"
+    },
+    {
+      "Id": "/home/nick/Desktop/projects/personal/protocol-droid/web/wwwroot/dist/lean-welcome.js",
+      "PackagePath": "staticwebassets/dist/lean-welcome.js"
+    },
+    {
+      "Id": "/home/nick/Desktop/projects/personal/protocol-droid/web/wwwroot/dist/lego.min.js",
+      "PackagePath": "staticwebassets/dist/lego.min.js"
+    },
+    {
       "Id": "/home/nick/Desktop/projects/personal/protocol-droid/web/wwwroot/favicon.ico",
       "PackagePath": "staticwebassets/favicon.ico"
     },
