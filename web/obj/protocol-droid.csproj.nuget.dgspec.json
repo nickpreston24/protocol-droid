@@ -1,0 +1,145 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/nick/Desktop/projects/personal/protocol-droid/web/protocol-droid.csproj": {}
+  },
+  "projects": {
+    "/home/nick/Desktop/projects/personal/protocol-droid/web/protocol-droid.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/nick/Desktop/projects/personal/protocol-droid/web/protocol-droid.csproj",
+        "projectName": "protocol-droid",
+        "projectPath": "/home/nick/Desktop/projects/personal/protocol-droid/web/protocol-droid.csproj",
+        "packagesPath": "/home/nick/.nuget/packages/",
+        "outputPath": "/home/nick/Desktop/projects/personal/protocol-droid/web/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/nick/Desktop/projects/personal/protocol-droid/web/nuget.config",
+          "/home/nick/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.pkg.github.com/RazorHAT/index.json": {},
+          "https://www.myget.org/F/code-mechanic/api/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Airtable": {
+              "target": "Package",
+              "version": "[1.3.0, )"
+            },
+            "CodeMechanic.Async": {
+              "target": "Package",
+              "version": "[1.0.1, )"
+            },
+            "CodeMechanic.Diagnostics": {
+              "target": "Package",
+              "version": "[1.0.2, )"
+            },
+            "CodeMechanic.Embeds": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
+            "CodeMechanic.FileSystem": {
+              "target": "Package",
+              "version": "[1.0.4, )"
+            },
+            "CodeMechanic.RazorHAT": {
+              "target": "Package",
+              "version": "[1.0.1, )"
+            },
+            "CodeMechanic.Reflection": {
+              "target": "Package",
+              "version": "[1.0.3, )"
+            },
+            "CodeMechanic.Regex": {
+              "target": "Package",
+              "version": "[1.0.1, )"
+            },
+            "CodeMechanic.Types": {
+              "target": "Package",
+              "version": "[1.0.6, )"
+            },
+            "Htmx": {
+              "target": "Package",
+              "version": "[1.6.1, )"
+            },
+            "Htmx.TagHelpers": {
+              "target": "Package",
+              "version": "[1.6.1, )"
+            },
+            "HyperTextExpression.AspNetCore": {
+              "target": "Package",
+              "version": "[0.0.7, )"
+            },
+            "Insight.Database": {
+              "target": "Package",
+              "version": "[6.3.11, )"
+            },
+            "JsonDiffPatch.Net": {
+              "target": "Package",
+              "version": "[2.3.0, )"
+            },
+            "MySqlConnector": {
+              "target": "Package",
+              "version": "[2.2.7, )"
+            },
+            "NSpecification": {
+              "target": "Package",
+              "version": "[1.3.0, )"
+            },
+            "Neo4j.Driver": {
+              "target": "Package",
+              "version": "[5.14.0, )"
+            },
+            "RestSharp": {
+              "target": "Package",
+              "version": "[110.2.1-alpha.0.2, )"
+            },
+            "System.ServiceModel.Syndication": {
+              "target": "Package",
+              "version": "[8.0.0-preview.3.23174.8, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.113/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

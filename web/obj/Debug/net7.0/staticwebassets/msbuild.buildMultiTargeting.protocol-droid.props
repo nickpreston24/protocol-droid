@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/protocol-droid.props" />
+</Project>
