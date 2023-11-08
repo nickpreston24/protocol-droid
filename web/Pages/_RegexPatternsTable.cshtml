@@ -1,0 +1,70 @@
+@using ProtocolDroid.Pages
+@model IEnumerable<ProtocolDroid.Pages.RegexPattern>
+
+@{
+    var patterns = Model.ToList();
+    var prop_names = typeof(RegexPattern).GetProperties().Select(x => x.Name);
+    var total_patterns = patterns.Count;
+}
+
+<div class="overflow-x-auto">
+    <table class="table table-zebra table-xs">
+        <thead>
+        <tr>
+            <th></th>
+
+            @foreach (var name in prop_names)
+            {
+                <th>@name</th>
+            }
+        </tr>
+        </thead>
+        <tbody>
+
+        @foreach (var pattern in patterns)
+        {
+            <tr>
+                <th>1</th>
+                <td>@pattern.Name</td>
+                <td class="text-xl sith-lightsaber">@pattern.Find</td>
+                <td class="text-xl green-lightsaber">@pattern.Replacement</td>
+                <td>@pattern.Description</td>
+                <td>@pattern.Languages</td>
+                <td>@pattern.Extensions</td>
+                <td>@pattern.TargetLanguage</td>
+                <td>@pattern.TargetExtensions</td>
+            </tr>
+        }
+
+        </tbody>
+        <tfoot>
+        <tr>
+            .green-lightsaber {
+            text-shadow: 4px 6px 8px rgba(255, 0, 0, 0.5);
+            }
+            <th></th>
+            @foreach (var name in prop_names)
+            {
+                <th>@name</th>
+            }
+        </tr>
+        </tfoot>
+    </table>
+
+    <label class='text-lg'>Total patterns: @total_patterns</label>
+</div>
+
+
+<style>
+    .green-lightsaber {
+        color: #FFFFFF;
+        text-shadow: 0 0 5px #FFF, 0 0 10px #FFF, 0 0 15px #FFF, 0 0 20px #49ff18, 0 0 30px #49FF18, 0 0 40px #49FF18, 0 0 55px #49FF18, 0 0 75px #49ff18;
+        color: #FFFFFF;
+    }
+    
+    .sith-lightsaber {
+        color: #FFFFFF;
+        text-shadow: 0 0 5px #FFF, 0 0 10px #FFF, 0 0 15px #FFF, 0 0 20px #f11, 0 0 30px #f11, 0 0 40px #f11, 0 0 55px #f11, 0 0 75px #f11;
+        color: #FFFFFF;
+    }
+</style>

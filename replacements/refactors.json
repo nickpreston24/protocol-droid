@@ -70,7 +70,8 @@
       {
         "name": "replace_asp_checkbox",
         "find": "\\basp:CheckBox\\b\\s*",
-        "replacement": "input type='checkbox'"
+        "replacement": "input type='checkbox'",
+        "description": "replaces the aspx checkbox with a more reasonable html checkbox (like normal people use)"
       },
       {
         "name": "replace_asp_label",
@@ -113,7 +114,8 @@
       {
         "name": "remove_styles",
         "find": "style=\".*?\"",
-        "replacement": ""
+        "replacement": "",
+        "description": "remove all styles"
       },
       {
         "name": "remove_colspan",

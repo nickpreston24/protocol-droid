@@ -60,12 +60,22 @@
 
         <sl-tab-panel name="advanced">
 
-            <button
-                class="btn btn-primary"
-                hx-swap="outerHTML"
-                hx-get='@Url.Page("Index", "SearchRegexPatterns", new { query_name = "searchregexpatterns" })'>
-                Click meee
-            </button>
+            <div
+                hx-trigger="revealed"
+                hx-get='@Url.Page("Index", "SeedRegexTableFromJson")'>
+                <img alt="Result loading..." class="htmx-indicator" width="150" src="/img/bars.svg"/>
+            </div>
+
+            <template x-if="false" x-cloak>
+            
+                <button
+                    class="btn btn-primary"
+                    hx-swap="outerHTML"
+                    hx-get='@Url.Page("Index", "SeedRegexTableFromJson")'>
+                    Seed Regex Patterns
+                </button>
+            
+            </template>
 
         </sl-tab-panel>
     </sl-tab-group>

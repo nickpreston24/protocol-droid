@@ -1,1 +1,1 @@
-SELECT avg(price) from cars;
+select avg(price) from cars;

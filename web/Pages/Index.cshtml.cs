@@ -1,12 +1,16 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using CodeMechanic.Diagnostics;
 using CodeMechanic.Embeds;
+using CodeMechanic.FileSystem;
 using CodeMechanic.Types;
 using Insight.Database;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.SqlClient;
+using Newtonsoft.Json;
 using Npgsql;
+using ProtocolDroid.Pages.Extensions;
 
 namespace ProtocolDroid.Pages;
 
@@ -17,7 +21,7 @@ public class IndexModel : PageModel
     private readonly IEmbeddedResourceQuery embeddedResourceQuery;
     private readonly string azure_sql_connectionstring = string.Empty;
     private string postgresql_connectionstring = string.Empty;
-    public string QueryName { get; set; } = "Test";
+    // public string QueryName { get; set; } = "Test";
 
     public IndexModel(
         IEmbeddedResourceQuery embeddedResourceQuery
@@ -34,30 +38,32 @@ public class IndexModel : PageModel
 
         postgresql_connectionstring =
             $"Host={host};Port={port};Username={username};Password={password};Database={database}";
-        Console.WriteLine(postgresql_connectionstring);
+        // Console.WriteLine(postgresql_connectionstring);
     }
 
-    public async Task<IActionResult> OnGetSearchRegexPatterns( /*string query_name = "fixme"*/)
+    public async Task<IActionResult> OnGetSearchRegexPatterns()
     {
+        // Console.WriteLine("method name :>> " + method_name);
         string filename = "ProtocolDroid.Pages.SearchRegexPatterns.sql";
         string query = ReadResourceFile(filename);
-        return Content($"""<user-profile>{query}</user-profile>""");
+        Console.WriteLine("pattern query :>> " + query);
+        // return Content($"""<user-profile>{query}</user-profile>""");
+        return Partial("_RegexPatternsTable", new List<RegexPattern>());
     }
-
 
     public async Task<IActionResult> OnGetTotalCars()
     {
         try
         {
-            // Thread.Sleep(500);
             string totals_query = ReadResourceFile("ProtocolDroid.Pages.TotalCars.sql");
             string avg_query = ReadResourceFile("ProtocolDroid.Pages.CarAverageCost.sql");
 
-            var totals_result = await PgExecuteScalar(postgresql_connectionstring, totals_query);
+            var totals_result = await postgresql_connectionstring.PgExecuteScalar(totals_query);
 
-            var avg_result = !string.IsNullOrEmpty(avg_query)
-                ? await PgExecuteScalar(postgresql_connectionstring, avg_query)
-                : "50";
+            var avg_result = "72721.125";
+            // !string.IsNullOrEmpty(avg_query)
+            // ? await postgresql_connectionstring.PgExecuteScalar(avg_query)
+            // : "50";
 
             Console.WriteLine($"total cars: {totals_result}");
             Console.WriteLine($"avg cars: {avg_result}");
@@ -75,15 +81,6 @@ public class IndexModel : PageModel
         }
     }
 
-    private async Task<string> PgExecuteScalar(string connectionstring, string query)
-    {
-        await using var connection = new NpgsqlConnection(connectionstring);
-        connection.Open();
-        await using var cmd = new NpgsqlCommand(query, connection);
-
-        var result = cmd.ExecuteScalar().ToString();
-        return result;
-    }
 
     private Func<Exception, string> Failure = ex => $"""
                                                      <sl-alert variant="danger" open>
@@ -93,26 +90,25 @@ public class IndexModel : PageModel
                                                      </sl-alert>
                                                      """;
 
-    private async Task<IList<Beer>> RunBeerExample()
+    private async Task<IList<RegexPattern>> RunInsightExample()
     {
-        await using (var connection = new SqlConnection(postgresql_connectionstring))
-        {
-            var repo = connection.As<IBeerRepository>();
-            var beer = new Beer { Type = "ipa", Description = "Sly Fox 113" };
+        await using var connection = new NpgsqlConnection(postgresql_connectionstring);
+        var repo = connection.As<ICarRepository>();
+        var RegexPattern = new RegexPattern
+            { Find = "foo", Description = "Find foo, replace with bar", Replacement = "bar" };
 
-            repo.InsertBeer(beer);
-            IList<Beer> beerList = repo.GetBeerByType("ipa").Dump("beers found");
-            repo.UpdateBeerList(beerList);
+        repo.InsertPattern(RegexPattern);
+        var regexpList = repo.GetPatternByType("vb").Dump("regexps found");
+        repo.UpdatePatternList(regexpList);
 
-            return beerList;
-        }
+        return regexpList;
     }
 
-    public interface IBeerRepository
+    public interface ICarRepository
     {
-        void InsertBeer(Beer beer);
-        IList<Beer> GetBeerByType(string type);
-        void UpdateBeerList(IList<Beer> beerList);
+        void InsertPattern(RegexPattern RegexPattern);
+        IList<RegexPattern> GetPatternByType(string type);
+        void UpdatePatternList(IList<RegexPattern> regexpList);
     }
 
     /// <summary>
@@ -133,6 +129,66 @@ public class IndexModel : PageModel
         //     .TimeoutAfter<IndexModel>(new TimeSpan(0, 0,
         //         30));
     }
+
+    public async Task<IActionResult> OnGetSeedRegexTableFromJson()
+    {
+        Console.WriteLine("Starting regex pattern seeding ... ");
+        var search = new Grepper
+        {
+            RootPath = Directory.GetCurrentDirectory().GoUp().Dump("current dir") + "/replacements",
+            FileSearchMask = "*.json",
+            Recursive = false
+        };
+
+        var json_files_found = search.GetFileNames();
+        json_files_found.Dump("found these files");
+
+        var all_replacements = json_files_found.Aggregate(new List<RegexPattern>(), (list, filepath) =>
+        {
+            string json = System.IO.File.ReadAllText(filepath);
+            List<ReplacementMap> raw_replacements = JsonConvert.DeserializeObject<List<ReplacementMap>>(
+                json
+            );
+
+            foreach (var map in raw_replacements)
+            {
+                foreach (var reps in map.Replacements)
+                {
+                    list.Add(new RegexPattern()
+                        .With(pattern =>
+                        {
+                            pattern.Extensions = map.Extensions;
+                            pattern.TargetExtensions = map.TargetExtension;
+                            pattern.Find = reps.TryGetValueOrDefault("find");
+                            pattern.Replacement = reps.TryGetValueOrDefault("replacement");
+                            pattern.Description = reps.TryGetValueOrDefault("description");
+                        }));
+                }
+            }
+
+
+            return list;
+        });
+
+
+        // await using var connection = new NpgsqlConnection(postgresql_connectionstring);
+
+
+        return Partial("_RegexPatternsTable", all_replacements);
+    }
+}
+
+public class RegexPattern
+{
+    public string Name { get; set; } = string.Empty;
+    public string Find { get; set; } = string.Empty;
+    public string Replacement { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+    public string Languages { get; set; } = string.Empty;
+    public string Extensions { get; set; } = ".txt";
+    public string TargetLanguage { get; set; } = string.Empty;
+    public string TargetExtensions { get; set; } = string.Empty;
+    public bool Enabled { get; set; } = true;
 }
 
 public class CarStats
@@ -141,9 +197,19 @@ public class CarStats
     public int totalcars { get; set; } = -9999;
 }
 
-public class Beer
+/// <summary>
+/// This is the C# representation of a JSON input file
+/// </summary>
+internal class ReplacementMap
 {
-    public int ID { get; private set; }
-    public string Type { get; set; }
-    public string Description { get; set; }
+    public string Extensions { get; set; }
+    public string TargetExtension { get; set; } = ".cs";
+
+    /* Sections of a JSON input file */
+
+    public List<Dictionary<string, string>> Replacements { get; set; } =
+        new List<Dictionary<string, string>>();
+
+    public List<Dictionary<string, string>> Removals { get; set; } =
+        new List<Dictionary<string, string>>();
 }
