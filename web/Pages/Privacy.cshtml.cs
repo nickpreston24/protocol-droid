@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace web.Pages;
+namespace ProtocolDroid.Pages;
 
 public class PrivacyModel : PageModel
 {

@@ -1,13 +1,15 @@
 using CodeMechanic.Embeds;
+using CodeMechanic.FileSystem;
 
 var builder = WebApplication.CreateBuilder(args);
+// Load and inject .env files & values
+DotEnv.Load();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddTransient<IEmbeddedResourceQuery, EmbeddedResourceQuery>();
 
 builder.Services.ConfigureAirtable();
-builder.Services.ConfigureNeo4j();
 
 var app = builder.Build();
 

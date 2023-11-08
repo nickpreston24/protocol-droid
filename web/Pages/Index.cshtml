@@ -1,24 +1,74 @@
 ﻿@page
-@model IndexModel
+@model ProtocolDroid.Pages.IndexModel
 @{
     ViewData["Title"] = "Home page";
-    var query_name = "Test name";
+    // var query_name = "Test name";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+<div x-data="setup()" class="text-center flex flex-col items-center">
 
     <lean-welcome></lean-welcome>
 
-    <hello-world></hello-world>
+    <sl-tab-group placement="bottom">
+        <sl-tab slot="nav" panel="general">Sample Web Component</sl-tab>
+        <sl-tab slot="nav" panel="custom">Basic Card</sl-tab>
+        <sl-tab slot="nav" panel="counter">Counter Sample</sl-tab>
+        <sl-tab slot="nav" panel="advanced" class="flex flex-row gap-2">
+            Transpile
+            <sl-icon name="terminal-split"></sl-icon>
+        </sl-tab>
 
-    @* <cm-hero></cm-hero> *@
+        <sl-tab-panel name="general">
+            <h2>Basic Web Component</h2>
+            <big-bang>
+                <h2 slot="title">Characters</h2>
+                <ul slot="list">
+                    <li>Leonard</li>
+                    <li>Sheldon</li>
+                    <li>Raj</li>
+                    <li>Howard</li>
+                </ul>
+            </big-bang>
 
-    <button
-        class="btn btn-primary"
-        hx-swap="outerHTML"
-        hx-get='@Url.Page("Index", "Profile", new { query_name = "search-regex-patterns" })'>
-        Click meee
-    </button>
+        </sl-tab-panel>
+
+        <sl-tab-panel name="custom">
+            <base-card></base-card>
+        </sl-tab-panel>
+
+        <sl-tab-panel name="counter">
+            <cm-counter x-data="{count: -1}">
+                <h2 slot="title">Current Count</h2>
+                <label slot="description">
+                    this is a counter...
+                </label>
+                <span slot="count" x-text="count"></span>
+                <span slot="actions">
+                    <button class="btn btn-secondary" x-on:click="count++">+</button>
+                    <button class="btn btn-secondary" x-on:click="count--">-</button>
+                </span>
+            </cm-counter>
+        </sl-tab-panel>
+
+        <sl-tab-panel name="advanced">
+
+            <button
+                class="btn btn-primary"
+                hx-swap="outerHTML"
+                hx-get='@Url.Page("Index", "SearchRegexPatterns", new { query_name = "searchregexpatterns" })'>
+                Click meee
+            </button>
+
+        </sl-tab-panel>
+    </sl-tab-group>
+
 
 </div>
+
+<script>
+function setup() {
+    return {
+           tab3: '' 
+        }
+    }
+</script>
