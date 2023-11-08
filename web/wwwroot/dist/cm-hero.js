@@ -6,6 +6,8 @@
 
   const __template = function({ state }) {
     return [  
+`cm-counter
+    `,
     h("div", {"class": `hero min-h-screen bg-base-200`}, [
       h("div", {"class": `hero-content text-center`}, [
         h("div", {"class": `max-w-md`}, [

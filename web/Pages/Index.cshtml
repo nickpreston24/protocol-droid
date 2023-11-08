@@ -9,9 +9,9 @@
 
     <lean-welcome></lean-welcome>
 
-    <sl-tab-group placement="bottom">
+    <sl-tab-group placement="top">
+        <sl-tab slot="nav" panel="custom">Postgresql Cars</sl-tab>
         <sl-tab slot="nav" panel="general">Sample Web Component</sl-tab>
-        <sl-tab slot="nav" panel="custom">Basic Card</sl-tab>
         <sl-tab slot="nav" panel="counter">Counter Sample</sl-tab>
         <sl-tab slot="nav" panel="advanced" class="flex flex-row gap-2">
             Transpile
@@ -33,7 +33,15 @@
         </sl-tab-panel>
 
         <sl-tab-panel name="custom">
-            <base-card></base-card>
+            @* <base-card></base-card> *@
+
+            <div
+                hx-trigger="load"
+                hx-get='@Url.Page("Index", "TotalCars")'>
+                <img alt="Result loading..." class="htmx-indicator" width="150" src="/img/bars.svg"/>
+            </div>
+            @* <div id="car_count"></div> *@
+
         </sl-tab-panel>
 
         <sl-tab-panel name="counter">
@@ -72,3 +80,12 @@ function setup() {
         }
     }
 </script>
+
+<style>
+    .htmx-settling img {
+      opacity: 0;
+    }
+    img {
+     transition: opacity 300ms ease-in;
+    }
+</style>

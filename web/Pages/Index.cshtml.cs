@@ -1,8 +1,7 @@
-﻿using System.Diagnostics;
-using System.Reflection;
-using System.Transactions;
+﻿using System.Reflection;
 using CodeMechanic.Diagnostics;
 using CodeMechanic.Embeds;
+using CodeMechanic.Types;
 using Insight.Database;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -35,60 +34,77 @@ public class IndexModel : PageModel
 
         postgresql_connectionstring =
             $"Host={host};Port={port};Username={username};Password={password};Database={database}";
+        Console.WriteLine(postgresql_connectionstring);
     }
 
     public async Task<IActionResult> OnGetSearchRegexPatterns( /*string query_name = "fixme"*/)
     {
         string filename = "ProtocolDroid.Pages.SearchRegexPatterns.sql";
         string query = ReadResourceFile(filename);
+        return Content($"""<user-profile>{query}</user-profile>""");
+    }
 
+
+    public async Task<IActionResult> OnGetTotalCars()
+    {
         try
         {
-            // RunBeerExample();
-            // Console.WriteLine(postgresql_connectionstring);
-            // return Content($"""conn => {postgresql_connectionstring}""");
+            // Thread.Sleep(500);
+            string totals_query = ReadResourceFile("ProtocolDroid.Pages.TotalCars.sql");
+            string avg_query = ReadResourceFile("ProtocolDroid.Pages.CarAverageCost.sql");
 
+            var totals_result = await PgExecuteScalar(postgresql_connectionstring, totals_query);
 
-            Console.WriteLine(postgresql_connectionstring);
+            var avg_result = !string.IsNullOrEmpty(avg_query)
+                ? await PgExecuteScalar(postgresql_connectionstring, avg_query)
+                : "50";
 
-            await using var con = new NpgsqlConnection(postgresql_connectionstring);
-            con.Open();
+            Console.WriteLine($"total cars: {totals_result}");
+            Console.WriteLine($"avg cars: {avg_result}");
+            Console.WriteLine(avg_query);
+            Console.WriteLine(totals_query);
+            // return Content($"<p>total cars: {result}</p>");
 
-            var sql = """
-                      SELECT count(*) from cars
-                      """;
-
-            await using var cmd = new NpgsqlCommand(sql, con);
-
-            var version = cmd.ExecuteScalar().ToString();
-            Console.WriteLine($"PostgreSQL version: {version}");
-            return Content($"<p>PostgreSQL version: {version}</p>");
+            return Partial("_CarStats",
+                new CarStats { totalcars = totals_result.ToInt(), averagecost = avg_result.ToDouble() });
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex);
-            return Content($"""
-                            <sl-alert variant="danger" open>
-                              <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
-                              <strong>Something failed!</strong><br />
-                              {ex}
-                            </sl-alert>
-                            """);
+            return Content(Failure(ex));
         }
-
-        return Content($"""<user-profile>{query}</user-profile>""");
     }
 
-    private async void RunBeerExample()
+    private async Task<string> PgExecuteScalar(string connectionstring, string query)
+    {
+        await using var connection = new NpgsqlConnection(connectionstring);
+        connection.Open();
+        await using var cmd = new NpgsqlCommand(query, connection);
+
+        var result = cmd.ExecuteScalar().ToString();
+        return result;
+    }
+
+    private Func<Exception, string> Failure = ex => $"""
+                                                     <sl-alert variant="danger" open>
+                                                       <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
+                                                       <strong>Something failed!</strong><br />
+                                                       {ex}
+                                                     </sl-alert>
+                                                     """;
+
+    private async Task<IList<Beer>> RunBeerExample()
     {
         await using (var connection = new SqlConnection(postgresql_connectionstring))
         {
             var repo = connection.As<IBeerRepository>();
-            var beer = new Beer() { Type = "ipa", Description = "Sly Fox 113" };
+            var beer = new Beer { Type = "ipa", Description = "Sly Fox 113" };
 
             repo.InsertBeer(beer);
             IList<Beer> beerList = repo.GetBeerByType("ipa").Dump("beers found");
             repo.UpdateBeerList(beerList);
+
+            return beerList;
         }
     }
 
@@ -105,14 +121,24 @@ public class IndexModel : PageModel
     private string ReadResourceFile(string filename)
     {
         var thisAssembly = Assembly.GetExecutingAssembly();
-        using (var stream = thisAssembly.GetManifestResourceStream(filename))
-        {
-            using (var reader = new StreamReader(stream))
-            {
-                return reader.ReadToEnd();
-            }
-        }
+        using var stream = thisAssembly.GetManifestResourceStream(filename);
+        using var reader = new StreamReader(stream);
+        return reader.ReadToEnd();
     }
+
+    private async void TaskExtensionTests()
+    {
+        // Task.Run(() =>
+        //         Thread.Sleep(60000))
+        //     .TimeoutAfter<IndexModel>(new TimeSpan(0, 0,
+        //         30));
+    }
+}
+
+public class CarStats
+{
+    public double averagecost { get; set; } = -9999.00;
+    public int totalcars { get; set; } = -9999;
 }
 
 public class Beer

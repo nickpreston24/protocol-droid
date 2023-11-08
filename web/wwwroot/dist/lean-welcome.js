@@ -6,9 +6,14 @@
 
   const __template = function({ state }) {
     return [  
-    h("h1", {}, `Welcome to LEGO`),
+    h("h1", {"style": `color: #4a90e2;`}, [
+`Welcome to Protocol Droid
+        `,
+      h("sl-icon", {"class": `bg-accent text-accent`, "style": `{color: #1b6ec2}`, "name": `android`}, "")
+    ]),
     h("p", {}, [
-`The lean way to make web-components `,
+`The fast way to refactor!
+        `,
       h("slot", {}, "")
     ])
   ]
