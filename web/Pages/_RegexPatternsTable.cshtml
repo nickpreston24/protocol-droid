@@ -7,7 +7,7 @@
     var total_patterns = patterns.Count;
 }
 
-<div class="overflow-x-auto">
+<div class="border-4 border-red overflow-x-auto">
     <table class="table table-zebra table-xs">
         <thead>
         <tr>
@@ -56,15 +56,13 @@
 
 
 <style>
-    .green-lightsaber {
-        color: #FFFFFF;
-        text-shadow: 0 0 5px #FFF, 0 0 10px #FFF, 0 0 15px #FFF, 0 0 20px #49ff18, 0 0 30px #49FF18, 0 0 40px #49FF18, 0 0 55px #49FF18, 0 0 75px #49ff18;
-        color: #FFFFFF;
-    }
-    
-    .sith-lightsaber {
-        color: #FFFFFF;
-        text-shadow: 0 0 5px #FFF, 0 0 10px #FFF, 0 0 15px #FFF, 0 0 20px #f11, 0 0 30px #f11, 0 0 40px #f11, 0 0 55px #f11, 0 0 75px #f11;
-        color: #FFFFFF;
+   
+   /* source: https://stackoverflow.com/questions/23940690/how-to-fit-table-rows-that-are-too-big-for-page-display */
+   table tbody td {
+        max-width: 250px;
+        /*// you can use any width you like, the scrollbar will show up only when a cell exceeds the max-width.*/
+        /*overflow-x: auto;*/
+        white-space: normal;
+
     }
 </style>

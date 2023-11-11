@@ -5,7 +5,7 @@
     // var query_name = "Test name";
 }
 
-<div x-data="setup()" class="text-center flex flex-col items-center">
+<div x-data="setup()" class="flex flex-col items-center justify-center">
 
     <lean-welcome></lean-welcome>
 
@@ -60,22 +60,25 @@
 
         <sl-tab-panel name="advanced">
 
-            <div
-                hx-trigger="revealed"
-                hx-get='@Url.Page("Index", "SeedRegexTableFromJson")'>
-                <img alt="Result loading..." class="htmx-indicator" width="150" src="/img/bars.svg"/>
-            </div>
+            <div id="regex_container" class="relative top-0 bottom-0 left-0 right-0 flex items-center justify-center ">
 
-            <template x-if="false" x-cloak>
-            
-                <button
-                    class="btn btn-primary"
-                    hx-swap="outerHTML"
+                <div
+                    hx-trigger="revealed"
                     hx-get='@Url.Page("Index", "SeedRegexTableFromJson")'>
-                    Seed Regex Patterns
-                </button>
-            
-            </template>
+                    <img alt="Result loading..." class="htmx-indicator" width="150" src="/img/bars.svg"/>
+                </div>
+
+                <template x-if="false" x-cloak>
+
+                    <button
+                        class="btn btn-primary"
+                        hx-swap="outerHTML"
+                        hx-get='@Url.Page("Index", "SeedRegexTableFromJson")'>
+                        Seed Regex Patterns
+                    </button>
+
+                </template>
+            </div>
 
         </sl-tab-panel>
     </sl-tab-group>
