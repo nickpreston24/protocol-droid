@@ -3,7 +3,7 @@ export default {
   baseClassName: "Lego",
   sourceDir: "bricks",
   targetDir: "wwwroot/dist",
-  watch: false,
+  watch: true,
   useShadowDOM: true,
   preScript: "",
   preStyle: "",
