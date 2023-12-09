@@ -4,8 +4,78 @@
 @{
 }
 
-<div>
-    <h1>
-        Hello!
-    </h1>
-</div>
+<main>
+    <div class="a-to-b-code-converter">
+        <div class="a-to-b-lang-logo-row">
+            <div class="lang-input">
+                <img src="~/img/visualbasic.png" width="100" height="100" alt="input programming language logo">
+            </div>
+            <h2 class="row-center">Online VB to Csharp Converter</h2>
+            <div class="lang-input">
+                <img src="~/img/csharp.svg" width="100" height="100" alt="output programming language logo">
+            </div>
+        </div>
+        <div class="file-upload border-dashed">
+            <input type="file" style="display: none;">
+            <p>Drop your input code file here, or click to select the file,<br> or type in the input code below.</p>
+        </div>
+    </div>
+
+    <div class="hero min-h-screen bg-base-200">
+        <div class="hero-content text-center">
+            <div class="max-w-md">
+                <partial name="QuillEditor" model="Model.InputEditor"></partial>
+
+                <button
+                    hx-get
+                    hx-page="Index"
+                    hx-page-handler="Convert"
+                    hx-target="#@Model.InputEditor.editor_id"
+                    hx-trigger="click"
+                    class="btn btn-primary">
+                    Convert
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    @* *@
+    @* <div *@
+    @*     x-if="false" *@
+    @*     class="grid grid-cols-2"> *@
+    @* *@
+    @*     <template> *@
+    @* *@
+    @*         <!-- Create the editor container --> *@
+    @*         <div id="code_output_quill"> *@
+    @*             <p>Hello World!</p> *@
+    @*             <p>Some initial <strong>bold</strong> text</p> *@
+    @*             <p> *@
+    @*                 <br> *@
+    @*             </p> *@
+    @*         </div> *@
+    @* *@
+    @*         <div id="code_input_quill"> *@
+    @*             <p>Hello World!</p> *@
+    @*             <p>Some initial <strong>bold</strong> text</p> *@
+    @*             <p> *@
+    @*                 <br> *@
+    @*             </p> *@
+    @*         </div> *@
+    @*     </template> *@
+    @* </div> *@
+
+</main>
+
+@* *@
+@* <!-- Initialize Quill editor --> *@
+@* <script> *@
+@*   var code_input_quill = new Quill('#code_input_quill', { *@
+@*     theme: 'snow' *@
+@*   }); *@
+@*    *@
+@*    var code_output_quill = new Quill('#code_output_quill', { *@
+@*       theme: 'snow' *@
+@*     }); *@
+@* </script> *@

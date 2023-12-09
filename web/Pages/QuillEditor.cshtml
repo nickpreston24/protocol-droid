@@ -1,0 +1,45 @@
+@using CodeMechanic.RazorHAT
+@using CodeMechanic.RazorHAT.Services
+@using ProtocolDroid.Models
+@model ProtocolDroid.Models.QuillEditor
+@inject IMarkdownService markdownService
+
+@{
+    var editor = Model;
+    bool settings_valid = editor.IsValid();
+}
+
+
+@* <div> *@
+@* <div x-data="setup()"> *@
+
+<!-- csharp variable as a reactive alpinejs var: -->
+@* <h1 x-text="greeting"></h1> *@
+
+<div x-if="@settings_valid.AsJS()">
+    <div id="@editor.editor_id">
+        <!-- csharp string can be made into a safe html string and Quill still picks it up! -->
+        @Model.Html.AsHTMLString()
+    </div>
+</div>
+
+<!-- Only runs the script if our editor settings are correct on the backend! -->
+@if (editor.IsValid())
+{
+    <script>
+        // Attach the quill editor, where the id is named after a C# variable:
+        var code_output_quill = new Quill('#@editor.editor_id', {
+          theme: '@editor.theme'
+        });
+    </script>
+}
+
+<script>
+
+function setup() {
+    return {
+        // greeting is assigned by a c# string
+        greeting: '@editor.Greeting'
+        }
+    }
+</script>

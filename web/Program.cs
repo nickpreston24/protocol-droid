@@ -1,5 +1,7 @@
 using CodeMechanic.Embeds;
 using CodeMechanic.FileSystem;
+using CodeMechanic.RazorHAT.Services;
+using ProtocolDroid.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 // Load and inject .env files & values
@@ -8,6 +10,9 @@ DotEnv.Load();
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddTransient<IEmbeddedResourceQuery, EmbeddedResourceQuery>();
+builder.Services.AddSingleton<IMarkdownService, MarkdownService>();
+
+builder.Services.AddScoped<ISharpifyService, SharpifyService>();
 
 builder.Services.ConfigureAirtable();
 

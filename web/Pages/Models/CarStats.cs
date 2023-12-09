@@ -2,6 +2,6 @@ namespace ProtocolDroid.Models;
 
 public class CarStats
 {
-    public double averagecost { get; set; } = -9999.00;
-    public int totalcars { get; set; } = -9999;
+    public double averagecost { get; set; } = double.MinValue;
+    public int totalcars { get; set; } = int.MinValue;
 }
