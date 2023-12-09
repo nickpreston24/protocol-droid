@@ -1,4 +1,4 @@
- // Lego version 2.0.0-beta.7
+ // Lego version 2.0.0-beta.8
   import { h, Component } from './lego.min.js'
   
 
@@ -33,6 +33,7 @@
     init() {
       this.useShadowDOM = true
       if(typeof state === 'object') this.__state = Object.assign({}, state, this.__state)
+      if(typeof methods === 'object') Object.keys(methods).forEach(methodName => this[methodName] = methods[methodName])
       if(typeof connected === 'function') this.connected = connected
       if(typeof setup === 'function') setup.bind(this)()
     }

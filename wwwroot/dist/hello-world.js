@@ -1,19 +1,14 @@
- // Lego version 2.0.0-beta.7
+ // Lego version 2.0.0-beta.8
   import { h, Component } from './lego.min.js'
   
 
   
-    const state = {color: '#e4a', saber: 'rgba(0, 255, 0, 0.5)'}
+  const state = { name: "World!" }
 
 
   const __template = function({ state }) {
     return [  
-    h("h1", {}, `User profile`),
-    h("p", {}, [
-`important information:
-        `,
-      h("slot", {}, "")
-    ])
+    h("p", {}, `Hello ${ state.name }`)
   ]
   }
 
@@ -21,11 +16,6 @@
     return h('style', {}, `
       
       
-        h1 {
-            color: ${ state.color };
-            text-shadow: 4px 6px 8px ${ state.saber };
-        }
-    
     `)
   }
 
@@ -34,6 +24,7 @@
     init() {
       this.useShadowDOM = true
       if(typeof state === 'object') this.__state = Object.assign({}, state, this.__state)
+      if(typeof methods === 'object') Object.keys(methods).forEach(methodName => this[methodName] = methods[methodName])
       if(typeof connected === 'function') this.connected = connected
       if(typeof setup === 'function') setup.bind(this)()
     }

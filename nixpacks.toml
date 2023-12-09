@@ -1,2 +1,2 @@
-[phases.build]
-cmds = ["echo starting razorhat build", "cd /web", "yarn build", "npm install", "echo done with razorhat build"]
+#[phases.build]
+#cmds = ["echo first", "yarn", "npm install", "echo last"]
